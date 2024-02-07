@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <link href="../css/bootstrap.min.css" rel="stylesheet"
+    <link href="../../static/css/bootstrap.min.css" rel="stylesheet"
           th:href="@{/css/bootstrap.min.css}">
 </head>
 <body>
@@ -37,7 +37,7 @@
             <tr th:each="item : ${items}">
                 <td><a href="item.html" th:href="@{/basic/items/{itemId}(itemId=${item.id})}" th:text="${item.id}">회원
                     id</a></td>
-                <td><a href="item.html" th:href="@{/basic/items/{itemId}(itemId=${item.id})}"
+                <td><a href="item.html" th:href="@{|/basic/items/${item.id}|}"
                        th:text="${item.getItemName()}">상품명</a></td>
                 <td th:text="${item.getPrice()}">10000</td>
                 <td th:text="${item.getQuantity()}">10</td>
