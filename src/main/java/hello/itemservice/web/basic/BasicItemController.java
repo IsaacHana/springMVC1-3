@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
 
@@ -68,12 +69,15 @@ public class BasicItemController {
     }
 
     @PostMapping("/add")
-    public String addItemV4(Item item) {
-        itemRepository.save(item);
+    public String addItemV4(Item item, RedirectAttributes redirectAttributes) {
+        Item savedItem = itemRepository.save(item);
         // 기본룰 1 @RequestParam 과 @ModelAttribute 는 생략 가능
         // 기본룰 2 클래스 이름의 카멜 케이스는 기본 이름이 된다.
         // ex) HelloData item 이 있다면 HelloData -> helloData 가 ModelAttribute 에 담긴다. ("helloData", item)
-        return "basic/item";
+        redirectAttributes.addAttribute("itemId", savedItem.getId());
+        redirectAttributes.addAttribute("status", true);
+        // status(itemId를 제외한 부분)는 queryParameter 형태로 들어가게 된다.
+        return "redirect:/basic/items/{itemId}";
     }
 
     @GetMapping("/{itemId}/edit")
